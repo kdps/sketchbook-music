@@ -1,0 +1,42 @@
+<a id="urlgo" title="랜덤음악"><img src="rnds.png"/></a>
+//랜덤게시물 버튼
+
+<script>
+function instrurl(){
+var sr = document.getElementById('urlgo');
+var audios = document.getElementById('url');
+sr.href=audios.value;
+}
+</script>
+
+{@
+$args_target->search_target = ''; 
+$args_target->search_keyword = ''; 
+$args_target->mid = $mid; 
+srand((double)microtime()*1000000); 
+$rnds=mt_rand(1,$page_navigation->last_page); 
+$args_target->page = $rnds; 
+srand((double)microtime()*1000000); 
+$rnds=mt_rand(1,20); 
+$args_target->list_count = $rnds; 
+$oModuleModel = &getModel('module');
+$target_module_info = $oModuleModel->getModuleInfoByMid($args_target->mid);
+$args_target->module_srl = $target_module_info->module_srl;
+$oDocumentModel = &getModel('document');
+$output_target = $oDocumentModel->getDocumentList($args_target);
+}
+
+<!--@foreach($output_target->data as $no_target=>$oTarget)-->
+{@
+srand((double)microtime()*1000000); 
+$rnds=mt_rand(1,2);}
+<!--@if($rnds=1)-->
+<!--@if(getUrl('mid',$mid,'document_srl',$oTarget->document_srl))-->
+<input type="hidden" id="url" value="{getUrl('page','','mid',$mid,'document_srl',$oTarget->document_srl)}" />
+<script>instrurl();</script>
+<!--@if($oTarget->document_srl)-->
+{@ return;}
+<!--@end-->
+<!--@end-->
+<!--@end-->
+<!--@end-->
